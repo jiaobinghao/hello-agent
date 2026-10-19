@@ -1,0 +1,4 @@
+# 本地验证使用的直接依赖版本；安装方式见 README。
+openai==3.28.0
+pydantic==2.14.0
+python-dotenv==1.2.4

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hello-agent-local"
+version = "0.1.0"
+description = "按 Hello-Agents 第七章从零实现的教学型 Agent 框架"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.30,<4",
+    "pydantic>=2.7,<3",
+    "python-dotenv>=1,<2",
+]
+
+[project.scripts]
+hello-agent = "hello_agents.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["hello_agents*"]
