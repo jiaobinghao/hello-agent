@@ -16,6 +16,19 @@ from . import (
 from .demo import run_demo
 
 
+def _enable_line_editing() -> None:
+    """在交互终端启用行编辑，正确处理中文占两列时的退格和光标移动。"""
+    if not (sys.stdin.isatty() and sys.stdout.isatty()):
+        return  # 管道和重定向按普通文本读取，不启用终端编辑。
+    try:
+        # 导入 readline 就会为 input() 注册行编辑器，无需显式调用其函数。
+        # 只靠终端默认的退格回显，可能只擦除汉字占用的两列中的一列。
+        import readline
+    except ImportError:
+        # 部分平台的 Python 不包含此可选标准库，仍可使用基础 input()。
+        pass
+
+
 def main(argv: list[str] | None = None) -> int:
     """命令行主流程：读参数 → 准备模型/工具 → 创建 Agent → 执行任务。
 
@@ -48,6 +61,8 @@ def main(argv: list[str] | None = None) -> int:
             # 离线分支直接使用脚本模型，不要求先配置密钥或模型 ID。
             run_demo()
             return 0
+        if args.chat or args.task is None:
+            _enable_line_editing()
         # 2. 把 .env 读入进程环境；override=False 保留用户已设置的环境变量。
         load_dotenv(args.env_file, override=False)
         config = Config.from_env()

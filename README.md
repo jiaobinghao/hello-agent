@@ -62,6 +62,8 @@ LLM_API_KEY=你的密钥
 
 省略任务时提示输入一条任务；`--chat` 才会持续读取下一轮。`--max-steps 8` 调整 Simple/ReAct/FunctionCall 的调用上限；`--trace` 将本轮工具观察或生成阶段输出至 stderr，最终答案输出至 stdout。也可使用安装后的 `.venv/bin/hello-agent` 命令。
 
+交互终端会在 Python 提供 `readline` 时启用行编辑，正确处理中文退格和光标移动；通过管道或重定向输入时按普通文本读取。
+
 CLI 默认加载**当前目录**的 `.env`，可用 `--env-file /path/to/.env` 指定；已有环境变量优先。库不在导入时加载 `.env`，写 Python 脚本时需要显式调用 `load_dotenv()`。
 
 配置项：
